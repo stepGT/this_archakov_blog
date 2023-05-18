@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import { registerValidation } from './validations.js';
+import { registerValidation, loginValidation } from './validations.js';
 import { validationResult } from 'express-validator';
 import UserModel from './models/User.js';
 import bcrypt from 'bcrypt';
@@ -18,9 +18,42 @@ app.get('/', (req, res) => {
   res.send('Hello stepGT Blog');
 });
 
-app.post('/auth/login', (req, res) => {
-  const token = jwt.sign({ email: req.body.email, fullName: 'stepGT' }, '__secret');
-  res.json({ success: true, token });
+app.post('/auth/login', loginValidation, async (req, res) => {
+  try {
+    const user = await UserModel.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).json({
+        message: 'Пользователь не найден',
+      });
+    }
+    const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+    if (!isValidPass) {
+      return res.status(400).json({
+        message: 'Неверный логин или пароль',
+      });
+    }
+    const token = jwt.sign(
+      {
+        _id: user._id,
+      },
+      '__secret',
+      {
+        expiresIn: '30d',
+      },
+    );
+
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json({
+      ...userData,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Не удалось авторизоваться',
+    });
+  }
 });
 
 app.post('/auth/register', registerValidation, async (req, res) => {
