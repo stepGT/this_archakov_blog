@@ -5,6 +5,7 @@ import { registerValidation, loginValidation } from './validations.js';
 import { validationResult } from 'express-validator';
 import UserModel from './models/User.js';
 import bcrypt from 'bcrypt';
+import checkAuth from './utils/checkAuth.js';
 
 mongoose
   .connect('mongodb+srv://admin:wwwwww@cluster0.7nouj.mongodb.net/blog?retryWrites=true&w=majority')
@@ -14,8 +15,22 @@ mongoose
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello stepGT Blog');
+app.get('/auth/me', checkAuth, async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.userID);
+    if (!user) {
+      return res.status(404).json({
+        message: 'Пользователь не найден!',
+      });
+    }
+    const { passwordHash, ...userData } = user._doc;
+    res.json(userData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Нет доступа!',
+    });
+  }
 });
 
 app.post('/auth/login', loginValidation, async (req, res) => {
