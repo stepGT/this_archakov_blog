@@ -1,8 +1,12 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import { registerValidation } from './validations.js';
+import { registerValidation, loginValidation } from './validations.js';
 import { validationResult } from 'express-validator';
+import UserModel from './models/User.js';
+import bcrypt from 'bcrypt';
+import checkAuth from './utils/checkAuth.js';
+import { getMe, login, register } from './controllers/UserController.js';
 
 mongoose
   .connect('mongodb+srv://admin:wwwwww@cluster0.7nouj.mongodb.net/blog?retryWrites=true&w=majority')
@@ -12,20 +16,11 @@ mongoose
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello stepGT Blog');
-});
+app.get('/auth/me', checkAuth, getMe);
 
-app.post('/auth/login', (req, res) => {
-  const token = jwt.sign({ email: req.body.email, fullName: 'stepGT' }, '__secret');
-  res.json({ success: true, token });
-});
+app.post('/auth/login', loginValidation, login);
 
-app.post('/auth/register', registerValidation, (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json(errors.array());
-  res.json({ success: true });
-});
+app.post('/auth/register', registerValidation, register);
 
 app.listen(4444, (err) => {
   if (err) return console.log(err);
