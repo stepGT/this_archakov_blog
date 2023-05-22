@@ -5,6 +5,7 @@ import checkAuth from './utils/checkAuth.js';
 import { getMe, login, register } from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 
+mongoose.set('strictQuery', false);
 mongoose
   .connect('mongodb+srv://admin:wwwwww@cluster0.7nouj.mongodb.net/blog?retryWrites=true&w=majority')
   .then(() => console.log('DB ok'))
