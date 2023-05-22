@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
-import { getMe, login, register } from './controllers/UserController.js';
+import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 
 mongoose.set('strictQuery', false);
@@ -14,11 +14,9 @@ mongoose
 const app = express();
 app.use(express.json());
 
-app.get('/auth/me', checkAuth, getMe);
-
-app.post('/auth/login', loginValidation, login);
-
-app.post('/auth/register', registerValidation, register);
+app.get('/auth/me', checkAuth, UserController.getMe);
+app.post('/auth/login', loginValidation, UserController.login);
+app.post('/auth/register', registerValidation, UserController.register);
 
 app.get('/posts', PostController.getAll);
 app.get('/post/:id', PostController.getOne);
