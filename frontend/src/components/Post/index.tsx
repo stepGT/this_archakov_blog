@@ -20,7 +20,7 @@ type PostProps = {
   isEditable: boolean;
   isFullPost: boolean;
   isLoading: boolean;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export const Post = ({ _id, title, imageUrl, isEditable, isFullPost, isLoading }: PostProps) => {
