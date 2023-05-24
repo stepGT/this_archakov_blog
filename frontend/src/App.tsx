@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components';
-import { Home } from './pages';
+import { Home, FullPost } from './pages';
 
 const App = () => {
   return (
@@ -10,6 +10,7 @@ const App = () => {
       <Container maxWidth="lg">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/post/:id" element={<FullPost />} />
         </Routes>
       </Container>
     </>

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
@@ -19,6 +20,7 @@ type PostProps = {
   isEditable: boolean;
   isFullPost: boolean;
   isLoading: boolean;
+  children: ReactNode;
 };
 
 export const Post = ({ _id, title, imageUrl, isEditable, isFullPost, isLoading }: PostProps) => {
