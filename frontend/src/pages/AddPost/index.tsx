@@ -19,21 +19,6 @@ export const AddPost = () => {
     setValue(value);
   }, []);
 
-  const options = React.useMemo(
-    () => ({
-      spellChecker: false,
-      maxHeight: '400px',
-      autofocus: true,
-      placeholder: 'Введите текст...',
-      status: false,
-      autosave: {
-        enabled: true,
-        delay: 1000,
-      },
-    }),
-    [],
-  );
-
   return (
     <Paper style={{ padding: 30 }}>
       <Button variant="outlined" size="large">
@@ -57,7 +42,23 @@ export const AddPost = () => {
         fullWidth
       />
       <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
+      <SimpleMDE
+        className={styles.editor}
+        value={value}
+        onChange={onChange}
+        options={{
+          spellChecker: false,
+          maxHeight: '400px',
+          autofocus: true,
+          placeholder: 'Введите текст...',
+          status: false,
+          autosave: {
+            enabled: true,
+            delay: 1000,
+            uniqueId: 'uniqueID',
+          },
+        }}
+      />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
           Опубликовать
