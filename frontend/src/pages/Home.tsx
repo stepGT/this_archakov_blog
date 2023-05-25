@@ -1,7 +1,15 @@
 import { Tabs, Tab, Grid } from '@mui/material';
 import { Post } from '../components';
+import { useEffect } from 'react';
+import { fetchPosts } from '../redux/features/post/slice';
+import { useAppDispatch } from '../redux/store';
 
 export const Home = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
+  //
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
