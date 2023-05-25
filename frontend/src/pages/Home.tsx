@@ -1,7 +1,13 @@
+import axios from '../services/axios';
 import { Tabs, Tab, Grid } from '@mui/material';
 import { Post } from '../components';
+import { useEffect } from 'react';
 
 export const Home = () => {
+  useEffect(() => {
+    axios.get('/posts');
+  }, []);
+  //
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">

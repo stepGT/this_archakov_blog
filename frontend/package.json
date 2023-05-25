@@ -16,6 +16,7 @@
     "@mui/material": "^5.13.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/simplemde": "^1.11.8",
+    "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "easymde": "^2.18.0",
     "react": "^18.2.0",
