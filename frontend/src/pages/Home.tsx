@@ -1,11 +1,13 @@
-import axios from '../services/axios';
 import { Tabs, Tab, Grid } from '@mui/material';
 import { Post } from '../components';
 import { useEffect } from 'react';
+import { fetchPosts } from '../redux/features/post/slice';
+import { useAppDispatch } from '../redux/store';
 
 export const Home = () => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    axios.get('/posts');
+    dispatch(fetchPosts());
   }, []);
   //
   return (
