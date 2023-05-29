@@ -7,12 +7,14 @@ import { useAppDispatch } from '../redux/store';
 import { selectorPosts } from '../redux/features/post/selectors';
 import { selectorTags } from '../redux/features/tags/selectors';
 import { fetchTags } from '../redux/features/tags/slice';
+import { TagsBlock } from '../components/TagsBlock';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
   const { items, status } = useSelector(selectorPosts);
-  const { items: tags } = useSelector(selectorTags);
+  const { items: tags, status: tagsStatus } = useSelector(selectorTags);
   const isPostsLoading = status === 'pending';
+  const isTagsLoading = tagsStatus === 'pending';
   useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
@@ -47,6 +49,9 @@ export const Home = () => {
               />
             ),
           )}
+        </Grid>
+        <Grid xs={4} item>
+          <TagsBlock items={tags} isLoading={isTagsLoading} />
         </Grid>
       </Grid>
     </>
