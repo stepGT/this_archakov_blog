@@ -5,13 +5,17 @@ import { useEffect } from 'react';
 import { fetchPosts } from '../redux/features/post/slice';
 import { useAppDispatch } from '../redux/store';
 import { selectorPosts } from '../redux/features/post/selectors';
+import { selectorTags } from '../redux/features/tags/selectors';
+import { fetchTags } from '../redux/features/tags/slice';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
   const { items, status } = useSelector(selectorPosts);
+  const { items: tags } = useSelector(selectorTags);
   const isPostsLoading = status === 'pending';
   useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchTags());
   }, []);
   //
   return (
