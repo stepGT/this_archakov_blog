@@ -50,6 +50,8 @@ app.patch(
   PostController.update,
 );
 
+app.get('/tags', PostController.getLastTags);
+
 app.listen(4444, (err) => {
   if (err) return console.log(err);
   console.log('Server OK');
