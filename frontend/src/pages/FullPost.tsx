@@ -35,7 +35,8 @@ export const FullPost = () => {
           tags={data.tags}
           isEditable={false}
           isFullPost={true}
-          isLoading={isLoading}>
+          isLoading={isLoading}
+          text={data.text}>
           <p>{data.text}</p>
         </Post>
       )}

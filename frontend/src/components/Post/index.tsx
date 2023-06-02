@@ -11,9 +11,10 @@ import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
 import { UserInfo } from '../UserInfo';
 
-type PostProps = {
+export type PostProps = {
   _id: number;
   title: string;
+  text: string;
   imageUrl: string;
   user: object;
   createdAt: string;
