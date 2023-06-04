@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../../services/axios';
-import { EStatusAuth } from './types';
+import { EStatusAuth, TLogin } from './types';
 
-export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
+export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params: TLogin) => {
   const { data } = await axios.post('/auth/login', params);
   return data;
 });

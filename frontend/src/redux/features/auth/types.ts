@@ -8,3 +8,8 @@ export interface IAuthSlice {
   data: [];
   status: string;
 }
+
+export type TLogin = {
+  email: string;
+  password: string;
+};
