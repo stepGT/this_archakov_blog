@@ -1,4 +1,7 @@
 import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/features/auth/selectors';
 import { fetchAuth } from '../../redux/features/auth/slice';
 import { useAppDispatch } from '../../redux/store';
 import Typography from '@mui/material/Typography';
@@ -10,6 +13,7 @@ import styles from './Login.module.scss';
 import { TLogin } from '../../redux/features/auth/types';
 
 export const Login = () => {
+  const isAuth = useSelector(selectIsAuth);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -34,6 +38,9 @@ export const Login = () => {
       window.localStorage.setItem('token', data.payload.token);
     }
   };
+
+  if (isAuth) return <Navigate to="/" />;
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
