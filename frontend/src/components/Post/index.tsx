@@ -11,9 +11,10 @@ import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
 import { UserInfo } from '../UserInfo';
 
-type PostProps = {
+export type PostProps = {
   _id: number;
   title: string;
+  text: string;
   imageUrl: string;
   user: object;
   createdAt: string;
@@ -66,7 +67,7 @@ export const Post = ({
         <UserInfo {...user} additionalText={createdAt} />
         <div className={styles.indention}>
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
-            {isFullPost ? title : <a href={`/posts/${_id}`}>{title}</a>}
+            {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
           </h2>
 
           {children && <div className={styles.content}>{children}</div>}

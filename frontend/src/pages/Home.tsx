@@ -35,6 +35,7 @@ export const Home = () => {
               <Post key={ind} isLoading={true} />
             ) : (
               <Post
+                text=''
                 key={ind}
                 _id={el._id}
                 title={el.title}
