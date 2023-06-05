@@ -1,3 +1,5 @@
+import { TUser } from '../post/types';
+
 export enum EStatusAuth {
   PENDING   = 'pending',
   FULFILLED = 'fulfilled',
@@ -5,7 +7,7 @@ export enum EStatusAuth {
 }
 
 export interface IAuthSlice {
-  data: [];
+  data: TUser | null;
   status: string;
 }
 

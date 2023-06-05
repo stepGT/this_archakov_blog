@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../../services/axios';
-import { EStatusAuth, TLogin } from './types';
+import { EStatusAuth, IAuthSlice, TLogin } from './types';
 
 export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params: TLogin) => {
   const { data } = await axios.post('/auth/login', params);
   return data;
 });
 
-const initialState = {
+const initialState: IAuthSlice = {
   data: null,
   status: '',
 };
