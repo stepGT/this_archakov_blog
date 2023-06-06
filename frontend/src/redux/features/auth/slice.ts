@@ -7,6 +7,11 @@ export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params: TLogi
   return data;
 });
 
+export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
+  const { data } = await axios.get('/auth/me');
+  return data;
+});
+
 const initialState: IAuthSlice = {
   data: null,
   status: '',
@@ -30,6 +35,18 @@ const authSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(fetchAuth.rejected, (state) => {
+      state.status = EStatusAuth.REJECTED;
+      state.data = null;
+    });
+    builder.addCase(fetchAuthMe.pending, (state) => {
+      state.status = EStatusAuth.PENDING;
+      state.data = null;
+    });
+    builder.addCase(fetchAuthMe.fulfilled, (state, action) => {
+      state.status = EStatusAuth.FULFILLED;
+      state.data = action.payload;
+    });
+    builder.addCase(fetchAuthMe.rejected, (state) => {
       state.status = EStatusAuth.REJECTED;
       state.data = null;
     });
