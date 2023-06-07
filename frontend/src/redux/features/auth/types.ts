@@ -12,6 +12,7 @@ export interface IAuthSlice {
 }
 
 export type TLogin = {
+  fullName?: string;
   email: string;
   password: string;
 };

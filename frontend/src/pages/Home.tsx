@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
 import { Tabs, Tab, Grid } from '@mui/material';
 import { Post } from '../components';
 import { useEffect } from 'react';
 import { fetchPosts } from '../redux/features/post/slice';
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import { selectorPosts } from '../redux/features/post/selectors';
 import { selectorTags } from '../redux/features/tags/selectors';
 import { fetchTags } from '../redux/features/tags/slice';
@@ -11,9 +10,10 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 
 export const Home = () => {
+  const userData = useAppSelector(state => state.auth.data);
   const dispatch = useAppDispatch();
-  const { items, status } = useSelector(selectorPosts);
-  const { items: tags, status: tagsStatus } = useSelector(selectorTags);
+  const { items, status } = useAppSelector(selectorPosts);
+  const { items: tags, status: tagsStatus } = useAppSelector(selectorTags);
   const isPostsLoading = status === 'pending';
   const isTagsLoading = tagsStatus === 'pending';
   useEffect(() => {
@@ -35,7 +35,7 @@ export const Home = () => {
               <Post key={ind} isLoading={true} />
             ) : (
               <Post
-                text=''
+                text=""
                 key={ind}
                 _id={el._id}
                 title={el.title}
@@ -45,7 +45,7 @@ export const Home = () => {
                 viewsCount={el.viewsCount}
                 commentsCount={3}
                 tags={el.tags}
-                isEditable={true}
+                isEditable={userData?._id === el.user._id}
                 isFullPost={false}
                 isLoading={false}
               />
