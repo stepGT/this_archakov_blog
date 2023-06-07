@@ -1,4 +1,6 @@
 import React from 'react';
+import { selectIsAuth } from '../../redux/features/auth/selectors';
+import { useAppSelector } from '../../redux/store';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -6,8 +8,10 @@ import SimpleMDE from 'react-simplemde-editor';
 
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
+import { Navigate } from 'react-router-dom';
 
 export const AddPost = () => {
+  const isAuth = useAppSelector(selectIsAuth);
   const imageUrl = '';
   const [value, setValue] = React.useState('');
 
@@ -18,6 +22,10 @@ export const AddPost = () => {
   const onChange = React.useCallback((value: any) => {
     setValue(value);
   }, []);
+
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Paper style={{ padding: 30 }}>
