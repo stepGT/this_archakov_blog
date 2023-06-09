@@ -8,16 +8,44 @@ import SimpleMDE from 'react-simplemde-editor';
 
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import axios from '../../services/axios';
 
 export const AddPost: FC = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const inputFileRef = useRef<HTMLInputElement>(null);
   const isAuth = useAppSelector(selectIsAuth);
   const [imageUrl, setImageUrl] = useState('');
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const isEditing = Boolean(id);
+
+  const onSubmit = async () => {
+    try {
+      setLoading(true);
+
+      const fields = {
+        title,
+        imageUrl,
+        tags: tags.split(','),
+        text,
+      };
+
+      const { data } = isEditing
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post('/posts', fields);
+
+      const _id = isEditing ? id : data._id;
+
+      navigate(`/posts/${_id}`);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при создании статьи!');
+    }
+  };
 
   const handleChangeFile = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
     if (!e.target.files) return;
@@ -96,7 +124,7 @@ export const AddPost: FC = () => {
       />
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={onSubmit} size="large" variant="contained">
           Опубликовать
         </Button>
         <a href="/">
