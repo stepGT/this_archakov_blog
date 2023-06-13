@@ -10,6 +10,8 @@ import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
 import { UserInfo } from '../UserInfo';
+import { useAppDispatch } from '../../redux/store';
+import { fetchRemovePost } from '../../redux/features/post/slice';
 
 export type PostProps = {
   _id: number;
@@ -41,6 +43,13 @@ export const Post = ({
   createdAt,
 }: PostProps) => {
   if (isLoading) return <PostSkeleton />;
+  const dispatch = useAppDispatch();
+
+  const onClickRemove = () => {
+    if (window.confirm('Вы действительно хотите удалить статью?')) {
+      dispatch(fetchRemovePost(_id));
+    }
+  };
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -51,7 +60,7 @@ export const Post = ({
               <EditIcon />
             </IconButton>
           </Link>
-          <IconButton onClick={() => {}} color="secondary">
+          <IconButton onClick={onClickRemove} color="secondary">
             <DeleteIcon />
           </IconButton>
         </div>
