@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Post, PostProps } from '../components/Post';
 import axios from '../services/axios';
+import ReactMarkdown from 'react-markdown';
 
 export const FullPost = () => {
   const [data, setData] = useState<PostProps>();
@@ -37,7 +38,7 @@ export const FullPost = () => {
           isFullPost={true}
           isLoading={isLoading}
           text={data.text}>
-          <p>{data.text}</p>
+          <ReactMarkdown children={data.text} />
         </Post>
       )}
     </>

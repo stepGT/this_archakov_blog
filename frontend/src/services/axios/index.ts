@@ -11,9 +11,6 @@ export interface AxiosResponse<T = never> {
 
 const instance = axios.create({
   baseURL: 'http://localhost:4444',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 instance.interceptors.request.use((config) => {
