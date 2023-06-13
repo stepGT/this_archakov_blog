@@ -10,6 +10,17 @@ export const store = configureStore({
     tags: tagsReducer,
     auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['posts/fetchRemovePost/fulfilled'],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: [],
+        // Ignore these paths in the state
+        ignoredPaths: [],
+      },
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
