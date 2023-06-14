@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef, ChangeEvent, FC } from 'react';
+import { useState, useCallback, useMemo, useRef, ChangeEvent, FC, useEffect } from 'react';
 import { selectIsAuth } from '../../redux/features/auth/selectors';
 import { useAppSelector } from '../../redux/store';
 import TextField from '@mui/material/TextField';
@@ -69,6 +69,23 @@ export const AddPost: FC = () => {
     setText(value);
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text);
+          setImageUrl(data.imageUrl);
+          setTags(data.tags.join(','));
+        })
+        .catch((err) => {
+          console.warn(err);
+          alert('Ошибка при получении статьи!');
+        });
+    }
+  }, []);
+
   const options = useMemo(
     () =>
       ({
@@ -125,7 +142,7 @@ export const AddPost: FC = () => {
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          Опубликовать
+          {isEditing ? 'Сохранить' : 'Опубликовать'}
         </Button>
         <a href="/">
           <Button size="large">Отмена</Button>
