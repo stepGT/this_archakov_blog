@@ -20,7 +20,7 @@ export const AddPost: FC = () => {
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const isEditing = Boolean(id);
 
   const onSubmit = async () => {
