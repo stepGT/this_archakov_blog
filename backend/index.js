@@ -43,7 +43,7 @@ app.get('/posts/:id', PostController.getOne);
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch(
-  '/post/:id',
+  '/posts/:id',
   checkAuth,
   postCreateValidation,
   handleValidationErrors,
