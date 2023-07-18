@@ -119,7 +119,7 @@ export const AddPost: FC = () => {
         </Button>
       )}
       {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img className={styles.image} src={`${location.protocol}//${location.hostname}:4444${imageUrl}`} alt="Uploaded" />
       )}
       <br />
       <br />

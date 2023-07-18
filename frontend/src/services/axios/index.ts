@@ -8,9 +8,10 @@ export interface AxiosResponse<T = never> {
   config: AxiosRequestConfig<T>;
   request?: any;
 }
-
+console.log(`${location.protocol}//${location.hostname}:4444`)
 const instance = axios.create({
-  baseURL: 'http://localhost:4444',
+  baseURL: `${location.protocol}//${location.hostname}:4444`,
+  //baseURL: 'http://stepgt.ru:4444',
 });
 
 instance.interceptors.request.use((config) => {

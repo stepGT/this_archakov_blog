@@ -39,7 +39,7 @@ export const Home = () => {
                 key={ind}
                 _id={el._id}
                 title={el.title}
-                imageUrl={el.imageUrl ? `http://localhost:4444${el.imageUrl}` : ''}
+                imageUrl={el.imageUrl ? `${location.protocol}//${location.hostname}:4444${el.imageUrl}` : ''}
                 user={el.user}
                 createdAt={el.createdAt}
                 viewsCount={el.viewsCount}
